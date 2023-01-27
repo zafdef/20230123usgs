@@ -1,5 +1,5 @@
 from datetime import date
-
+from os import path
 
 class President():
     def __init__(self, index):
@@ -16,7 +16,7 @@ class President():
         return d
 
     def _get_data(self, index):
-        with open("../DATA/presidents.txt") as pfile:
+        with open(path.join("..", "DATA", "presidents.txt")) as pfile:
             for line in pfile:
                 flds = line.rstrip().split(":")
                 if int(flds[0]) == int(index):
