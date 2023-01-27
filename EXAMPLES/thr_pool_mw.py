@@ -1,8 +1,9 @@
 from multiprocessing.dummy import Pool  # .dummy has Pool for threads
+from multiprocessing import Pool as ProcPool
 import requests
 import time
 
-POOL_SIZE = 8
+POOL_SIZE = 16
 
 BASE_URL = 'https://www.dictionaryapi.com/api/v3/references/collegiate/json/'  # base url of site to access
 
@@ -13,15 +14,18 @@ SEARCH_TERMS = [  # terms to search for; each thread will search some of these t
     'sea', 'formula', 'translation', 'common',
     'business', 'frog', 'muntin', 'automobile',
     'green', 'connect','vial', 'battery', 'computer',
-    'sing', 'park', 'ladle', 'ram', 'dog', 'scalpel'
+    'sing', 'park', 'ladle', 'ram', 'dog', 'scalpel',
+    'ocean', 'mesa', 'syncline', 'strata', 'igneous',
+    'humerus', 'blanket', 'cola', 'koala', 'collie',
+    'market', 'sty', 'sword'
 ]
 def main():
     for function in get_data_threaded, get_data_serial:
         start_time = time.time()
         results = function()
-        total_time = time.time() - start_time
+        total_time = time.time() - start_time  # get actual network request time, not output time
         for search_term, result in zip(SEARCH_TERMS, results):  # iterate over results, mapping them to search terms
-            results = function()
+            # results = function()    D'OH!!!!
             print("{}:".format(search_term.upper()), end=" ")
             if result:
                 print(result)
